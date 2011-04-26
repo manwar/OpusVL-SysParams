@@ -1,2 +1,16 @@
 *.swp
 tags
+blib*
+Makefile
+inc
+Makefile.old
+Build
+META.yml
+Build.bat
+_build*
+pm_to_blib*
+*.tar.gz
+.lwpcookies
+cover_db
+pod2htm*.tmp
+OpusVL-SysParams-*
