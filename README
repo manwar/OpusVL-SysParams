@@ -1,15 +1,23 @@
 OpusVL-SysParams
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+OpusVL::SysParams - Module to handle system wide parameters
 
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
+The idea is to allow the storage and retrieval of system wide parameters.  The OpusVL::SysParams is the 
+main interface onto this storage and provides simple get/set methods.  This uses a DBIx::Class::Schema
+to store the data.  
+
+If you want to integrate this into an existing DBIx::Class Schema you can use a Role to apply to your
+schema to inject the necessary tables and a schema level sys_params object.
+
+    # in your schema class.
+    with 'OpusVL::SysParams::RolesFor::Schema';
+    OpusVL::SysParams::RolesFor::Schema->setup_sysparams(__PACKAGE__);
+
+    # now anywhere that has access to the schema can access the 
+    # sys_params object.
+    $schema->sys_params->get('param.name'); 
+
+FIXME: To use it stand alone you can use a regular Catalyst style config file to initialise the schema.
 
 
 INSTALLATION
@@ -21,35 +29,8 @@ To install this module, run the following commands:
 	make test
 	make install
 
-SUPPORT AND DOCUMENTATION
-
-After installing, you can find documentation for this module with the
-perldoc command.
-
-    perldoc OpusVL::SysParams
-
-You can also look for information at:
-
-    RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=OpusVL-SysParams
-
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/OpusVL-SysParams
-
-    CPAN Ratings
-        http://cpanratings.perl.org/d/OpusVL-SysParams
-
-    Search CPAN
-        http://search.cpan.org/dist/OpusVL-SysParams/
-
-
 LICENSE AND COPYRIGHT
 
 Copyright (C) 2011 OpusVL
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
-
+This software is licensed according to the "IP Assignment Schedule" provided with the development project.
