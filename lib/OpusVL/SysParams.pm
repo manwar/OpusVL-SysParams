@@ -3,9 +3,13 @@ package OpusVL::SysParams;
 use warnings;
 use strict;
 
+use Moose;
+
+has 'schema' => (isa => 'DBIx::Class::Schema', is => 'ro', required => 1 ); # can we set a default?
+
 =head1 NAME
 
-OpusVL::SysParams - The great new OpusVL::SysParams!
+OpusVL::SysParams - Module to handle system wide parameters
 
 =head1 VERSION
 
@@ -18,92 +22,47 @@ our $VERSION = '0.01';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+This module handles system wide parameters.
 
-Perhaps a little code snippet.
 
     use OpusVL::SysParams;
 
-    my $foo = OpusVL::SysParams->new();
+    my $sys_param = OpusVL::SysParams->new({ schema => $schema});
+    my $val = $sys_param->get('login.failures');
+    $sys_param->set('login.failures', 3);
     ...
 
-=head1 EXPORT
+=head1 METHODS
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
-
-=head1 SUBROUTINES/METHODS
-
-=head2 function1
+=head2 get
 
 =cut
 
-sub function1 {
+sub get {
+    my $self = shift;
+    my $schema = $self->schema;
+    return $schema->resultset('SysInfo')->get(@_);
 }
 
-=head2 function2
+=head2 set
 
 =cut
 
-sub function2 {
+sub set {
+    my $self = shift;
+    my $schema = $self->schema;
+    return $schema->resultset('SysInfo')->set(@_);
 }
 
 =head1 AUTHOR
 
 OpusVL, C<< <colin at opusvl.com> >>
 
-=head1 BUGS
-
-Please report any bugs or feature requests to C<bug-opusvl-sysparams at rt.cpan.org>, or through
-the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=OpusVL-SysParams>.  I will be notified, and then you'll
-automatically be notified of progress on your bug as I make changes.
-
-
-
-
-=head1 SUPPORT
-
-You can find documentation for this module with the perldoc command.
-
-    perldoc OpusVL::SysParams
-
-
-You can also look for information at:
-
-=over 4
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=OpusVL-SysParams>
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/OpusVL-SysParams>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/OpusVL-SysParams>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/OpusVL-SysParams/>
-
-=back
-
-
-=head1 ACKNOWLEDGEMENTS
-
-
 =head1 LICENSE AND COPYRIGHT
 
 Copyright 2011 OpusVL.
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
-
-See http://dev.perl.org/licenses/ for more information.
-
+This software is licensed according to the "IP Assignment Schedule" provided with the development project.
 
 =cut
 
