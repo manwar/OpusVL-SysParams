@@ -5,7 +5,13 @@ all_from 'lib/OpusVL/SysParams.pm';
 author   q{OpusVL <colin@opusvl.com>};
 license  'perl';
 
-build_requires 'Test::More';
+requires 'JSON';
+requires 'Moose';
+requires 'Moose::Role';
+requires 'MooseX::NonMoose';
+requires 'namespace::autoclean';
+
+build_requires 'Test::Most';
 
 auto_install;
 
