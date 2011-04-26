@@ -20,7 +20,7 @@ is $params->get('test.param'), 1;
 $params->set('test.array', [ 1, 2, 3 ]);
 eq_or_diff $params->get('test.array'), [ 1, 2, 3 ];
 
-my @keys = $params->key_names;
+@keys = $params->key_names;
 eq_or_diff \@keys, [ 'test.array', 'test.param' ];
 
 done_testing;

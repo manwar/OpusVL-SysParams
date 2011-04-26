@@ -5,7 +5,19 @@ use strict;
 
 use Moose;
 
-has 'schema' => (isa => 'DBIx::Class::Schema', is => 'ro', required => 1 ); # can we set a default?
+has 'schema' => (isa => 'DBIx::Class::Schema', is => 'ro', required => 1,
+    default => sub
+    {
+        # this means we only load Config::JFDI and create our schema if they
+        # don't specify their own schema.
+        require Config::JFDI;
+        require OpusVL::SysParams::Schema;
+        my $config = Config::JFDI->new(name => __PACKAGE__);
+        my $config_hash = $config->get;
+        my $schema = OpusVL::SysParams::Schema->connect( @{$config_hash->{'Model::SysParams'}->{connect_info}} );
+        return $schema;
+    }
+); 
 
 =head1 NAME
 
@@ -27,12 +39,32 @@ This module handles system wide parameters.
 
     use OpusVL::SysParams;
 
+    my $sys_param = OpusVL::SysParams->new();
+
+    # or 
+
     my $sys_param = OpusVL::SysParams->new({ schema => $schema});
+
     my $val = $sys_param->get('login.failures');
     $sys_param->set('login.failures', 3);
     ...
 
 =head1 METHODS
+
+=head2 new
+
+If the constructor is called without a schema specified it will attempt to load up a schema based
+on a config file in the catalyst style for the name 'OpusVL::SysParams'.  This config file should
+have a Model::SysParams section containing the config.
+
+    <Model::SysParams>
+        connect_info dbi:Pg:dbname=test1
+        connect_info user
+        connect_info password
+    </Model::SysParams>
+
+Note that you must specify at least 2 connect_info parameters even if you are using SQLite otherwise
+the code will crash.
 
 =head2 get
 

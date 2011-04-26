@@ -9,6 +9,7 @@ requires 'JSON';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'MooseX::NonMoose';
+requires 'Config::JFDI';
 requires 'DBIx::Class';
 requires 'namespace::autoclean';
 
