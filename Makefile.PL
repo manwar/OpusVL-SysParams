@@ -9,9 +9,11 @@ requires 'JSON';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'MooseX::NonMoose';
+requires 'DBIx::Class';
 requires 'namespace::autoclean';
 
 build_requires 'Test::Most';
+build_requires 'Test::DBIx::Class';
 
 auto_install;
 
