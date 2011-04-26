@@ -31,6 +31,17 @@ kind of schema like 'system.key' to prevent name clashes with other unoriginal p
 
 The value can be any data structure so long as it doesn't contain code.  
 
+=head2 set_raw
+
+Set a system parameter.  This is essentially the same as set but it allows you to store a raw json
+representation of the variable you want to store.  In order to support complex data structures the
+data you 'set' is stored in json.  You probably don't want to use this method.
+
+=head2 key_names
+
+Returns the keys of the system parameters.
+
+
 =head1 AUTHOR
 
 OpusVL, C<< <colin at opusvl.com> >>
