@@ -6,6 +6,7 @@ inc
 Makefile.old
 Build
 META.yml
+MANIFEST*
 Build.bat
 _build*
 pm_to_blib*
