@@ -47,6 +47,18 @@ sub get {
     return $schema->resultset('SysInfo')->get(@_);
 }
 
+=head2 key_names
+
+Returns the keys of the system parameters.
+
+=cut
+
+sub key_names {
+    my $self = shift;
+    my $schema = $self->schema;
+    return $schema->resultset('SysInfo')->key_names(@_);
+}
+
 =head2 set
 
 Set a system parameter.  The key name is simply a string.  It's suggested you use some 
@@ -60,6 +72,20 @@ sub set {
     my $self = shift;
     my $schema = $self->schema;
     return $schema->resultset('SysInfo')->set(@_);
+}
+
+=head2 set_raw
+
+Set a system parameter.  This is essentially the same as set but it allows you to store a raw json
+representation of the variable you want to store.  In order to support complex data structures the
+data you 'set' is stored in json.  You probably don't want to use this method.
+
+=cut
+
+sub set_raw {
+    my $self = shift;
+    my $schema = $self->schema;
+    return $schema->resultset('SysInfo')->set_raw(@_);
 }
 
 =head1 AUTHOR

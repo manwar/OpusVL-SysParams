@@ -2,6 +2,7 @@ package OpusVL::SysParams::Schema::ResultSet::SysInfo;
 
 use Moose;
 extends 'DBIx::Class::ResultSet';
+use JSON;
 
 =head1 NAME
 
@@ -43,6 +44,13 @@ This software is licensed according to the "IP Assignment Schedule" provided wit
 =cut
 sub set
 {
+    my ($self, $name, $value) = @_;
+    
+    return $self->set_raw($name, JSON->new->allow_nonref->encode($value));
+}
+
+sub set_raw
+{
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
@@ -66,9 +74,14 @@ sub get
 		name => $name
 	});
 
-	return $info ? $info->value : undef;
+	return $info ? JSON->new->allow_nonref->decode($info->value) : undef;
 }
 
+sub key_names
+{
+    my $self = shift;
 
+    return $self->search(undef, { order_by => 'name' })->get_column('name')->all;
+}
 
 1;
