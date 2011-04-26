@@ -39,6 +39,14 @@ sub _build_sys_params
     return OpusVL::SysParams->new({ schema => $self });
 }
 
+=head2 setup_sysparams
+
+This method injects the result/resultset objects needed by the SysParams object into a the schema
+this role has been applied to.  If this isn't called as suggested in the synopsis you will need to
+have these results already loaded in your schema somehow.
+
+=cut
+
 # FIXME: point it to our schema stuff.
 sub setup_sysparams
 {

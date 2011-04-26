@@ -36,6 +36,9 @@ This module handles system wide parameters.
 
 =head2 get
 
+Get a system parameter.  The key name is simply a string.  It's suggested you use some 
+kind of schema like 'system.key' to prevent name clashes with other unoriginal programmers.
+
 =cut
 
 sub get {
@@ -45,6 +48,11 @@ sub get {
 }
 
 =head2 set
+
+Set a system parameter.  The key name is simply a string.  It's suggested you use some 
+kind of schema like 'system.key' to prevent name clashes with other unoriginal programmers.
+
+The value can be any data structure so long as it doesn't contain code.  
 
 =cut
 
