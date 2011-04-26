@@ -1,5 +1,3 @@
-OpusVL-SysParams
-
 OpusVL::SysParams - Module to handle system wide parameters
 
 The idea is to allow the storage and retrieval of system wide parameters.  The OpusVL::SysParams is the 
@@ -17,7 +15,24 @@ schema to inject the necessary tables and a schema level sys_params object.
     # sys_params object.
     $schema->sys_params->get('param.name'); 
 
-FIXME: To use it stand alone you can use a regular Catalyst style config file to initialise the schema.
+To use it stand alone you can use a regular Catalyst style config file to initialise the schema. 
+If the constructor is called without a schema specified it will attempt to load up a schema based
+on a config file in the catalyst style for the name 'OpusVL::SysParams'.  This config file should
+have a Model::SysParams section containing the config.
+
+    <Model::SysParams>
+        connect_info dbi:Pg:dbname=test1
+        connect_info user
+        connect_info password
+    </Model::SysParams>
+
+Note that you must specify at least 2 connect_info parameters even if you are using SQLite otherwise
+the code will crash.
+
+Set the environment variable OPUSVL_SYSPARAMS_CONFIG if you want to make sure you know where it will 
+pull it's config from.
+
+    $ENV{OPUSVL_SYSPARAMS_CONFIG} = $filename;
 
 
 INSTALLATION
