@@ -79,6 +79,17 @@ sub get {
     return $schema->resultset('SysInfo')->get(@_);
 }
 
+=head2 del
+
+Delete a system parameter.  The key name is simply a string.  
+=cut
+
+sub del {
+    my $self = shift;
+    my $schema = $self->schema;
+    return $schema->resultset('SysInfo')->del(@_);
+}
+
 =head2 key_names
 
 Returns the keys of the system parameters.

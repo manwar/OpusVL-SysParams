@@ -14,6 +14,7 @@ This is the ResultSet that actually stores and gets results from DBIx::Class.
 
     $schema->resultset('SysInfo')->set('test.param', 1);
     $schema->resultset('SysInfo')->get('test.param');
+    $schema->resultset('SysInfo')->del('test.param');
 
 This is used by the L<OpusVL::SysParams> object.
 
@@ -31,6 +32,10 @@ kind of schema like 'system.key' to prevent name clashes with other unoriginal p
 
 The value can be any data structure so long as it doesn't contain code.  
 
+=head2 del
+
+Delete a system parameter.
+
 =head2 set_raw
 
 Set a system parameter.  This is essentially the same as set but it allows you to store a raw json
@@ -40,7 +45,6 @@ data you 'set' is stored in json.  You probably don't want to use this method.
 =head2 key_names
 
 Returns the keys of the system parameters.
-
 
 =head1 AUTHOR
 
@@ -86,6 +90,19 @@ sub get
 	});
 
 	return $info ? JSON->new->allow_nonref->decode($info->value) : undef;
+}
+
+sub del 
+{
+	my $self = shift;
+	my $name = shift;
+
+	my $info = $self->find
+	({
+		name => $name
+	});
+
+	return $info ? $info->delete : undef;
 }
 
 sub key_names

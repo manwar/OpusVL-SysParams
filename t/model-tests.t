@@ -23,4 +23,8 @@ eq_or_diff $params->get('test.array'), [ 1, 2, 3 ];
 @keys = $params->key_names;
 eq_or_diff \@keys, [ 'test.array', 'test.param' ];
 
+$params->del('test.param');
+@keys = $params->key_names;
+eq_or_diff \@keys, [ 'test.array' ];
+
 done_testing;
