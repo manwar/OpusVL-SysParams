@@ -27,4 +27,7 @@ $params->del('test.param');
 @keys = $params->key_names;
 eq_or_diff \@keys, [ 'test.array' ];
 
+my $json = $params->get_json('test.array');
+$params->set_json('test.array', $json);
+
 done_testing;

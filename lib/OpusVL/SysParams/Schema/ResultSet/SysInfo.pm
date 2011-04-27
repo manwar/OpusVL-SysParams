@@ -36,12 +36,6 @@ The value can be any data structure so long as it doesn't contain code.
 
 Delete a system parameter.
 
-=head2 set_raw
-
-Set a system parameter.  This is essentially the same as set but it allows you to store a raw json
-representation of the variable you want to store.  In order to support complex data structures the
-data you 'set' is stored in json.  You probably don't want to use this method.
-
 =head2 key_names
 
 Returns the keys of the system parameters.
@@ -59,13 +53,6 @@ This software is licensed according to the "IP Assignment Schedule" provided wit
 =cut
 sub set
 {
-    my ($self, $name, $value) = @_;
-    
-    return $self->set_raw($name, JSON->new->allow_nonref->encode($value));
-}
-
-sub set_raw
-{
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
@@ -73,13 +60,13 @@ sub set_raw
 	my $info = $self->update_or_create
 	({
 		name  => $name,
-		value => $value
+		value => JSON->new->allow_nonref->encode($value)
 	});
 
 	return $value;
 }
 
-sub get 
+sub get
 {
 	my $self = shift;
 	my $name = shift;
