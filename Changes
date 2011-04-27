@@ -1,5 +1,9 @@
 Revision history for OpusVL-SysParams
 
+0.02    2011-04-22
+        Added proper json in/out method to support ui for now.  
+        Also added a delete method, again driven by the UI.
+
 0.01    2011-04-21
         Starter for 10.
 
