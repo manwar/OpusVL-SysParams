@@ -2,6 +2,7 @@
 tags
 blib*
 Makefile
+MYMETA*
 inc
 Makefile.old
 Build
