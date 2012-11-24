@@ -17,6 +17,13 @@ build_requires 'Test::Most';
 build_requires 'Test::DBIx::Class';
 
 auto_install;
+resources (
+    repository => {
+        url => 'ssh://git.rug-01.opusvl.net/srv/git/OpusVL-SysParams',
+        type => 'git',
+    },
+);
+
 
 WriteAll;
 
