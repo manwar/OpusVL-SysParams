@@ -13,6 +13,7 @@ requires 'Config::JFDI';
 requires 'DBIx::Class';
 requires 'namespace::autoclean';
 requires 'SQL::Translator' => '0.11018';
+requires 'Data::Munge';
 
 build_requires 'Test::Most';
 build_requires 'Test::DBIx::Class';

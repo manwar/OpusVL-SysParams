@@ -3,6 +3,7 @@ package OpusVL::SysParams;
 use warnings;
 use strict;
 use JSON;
+use Data::Munge qw/elem/;
 
 use Moose;
 
@@ -78,6 +79,30 @@ sub get {
     my $self = shift;
     my $schema = $self->schema;
     return $schema->resultset('SysInfo')->get(@_);
+}
+
+=head2 get_or_set
+
+Get a system parameter, setting it to a default if it doesn't already exist.
+
+    $self->get_or_set($name, $default_sub);
+
+$name - the name of the system parameter
+
+$default_sub - A CODEREF returning the default value.  $self (your instance of L<OpusVL::SysParams>) is passed as the first argument.
+
+=cut
+
+sub get_or_set {
+    my ($self, $name, $default_sub) = @_;
+    if (elem $name, [$self->key_names]) {
+        return $self->get($name);
+    }
+    else {
+        my $value = $default_sub->($self);
+        $self->set($name, $value);
+        return $value;
+    }
 }
 
 =head2 del
