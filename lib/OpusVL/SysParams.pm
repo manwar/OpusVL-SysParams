@@ -85,11 +85,15 @@ sub get {
 
 Get a system parameter, setting it to a default if it doesn't already exist.
 
-    $self->get_or_set($name, $default_sub);
+    $params->get_or_set($name, $default_sub);
 
-$name - the name of the system parameter
+C<$name> - the name of the system parameter
 
-$default_sub - A CODEREF returning the default value.  $self (your instance of L<OpusVL::SysParams>) is passed as the first argument.
+C<$default_sub> - A CODEREF returning the default value.  C<$params> (your instance of L<OpusVL::SysParams>) is passed as the first argument.
+
+Example:
+
+   $params->get_or_set('partner.titles', sub { 'Mr|Mrs|Miss|Mx' });
 
 =cut
 
