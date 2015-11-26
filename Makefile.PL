@@ -6,6 +6,7 @@ author   q{OpusVL <colin@opusvl.com>};
 license  'perl';
 
 requires 'JSON';
+requires 'JSON::MaybeXS';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'MooseX::NonMoose';

@@ -8,7 +8,9 @@ use MooseX::NonMoose;
 use namespace::autoclean;
 extends 'DBIx::Class::Core';
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
+use JSON::MaybeXS;
+
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", 'InflateColumn::Serializer');
 
 =head1 NAME
 
@@ -51,6 +53,10 @@ __PACKAGE__->add_columns(
   {
     data_type   => "text",
     is_nullable => 1,
+    serializer_class => 'JSON',
+    serializer_options => {
+        allow_nonref => 1
+    },
     original    => { data_type => "varchar" },
   },
   "comment",
@@ -62,6 +68,27 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("name");
 
+before update => sub {
+    my $self = shift;
+    my $params = shift;
+
+    if (my $raw = delete $params->{value_raw}) {
+        $params->{value} = JSON->new->allow_nonref->decode($raw);
+    }
+};
+
+sub raw_value {
+    my $self = shift;
+
+    # A bit awkward - we have to convert it into an object so the JSON
+    # serialiser can re-encode it.
+    if (my $value = shift) {
+        $self->value(JSON->new->allow_nonref->decode($value));
+    }
+
+    return if not defined $self->value;
+    return JSON->new->allow_nonref->encode($self->value);
+}
 
 __PACKAGE__->meta->make_immutable;
 
