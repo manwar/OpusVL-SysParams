@@ -7,6 +7,7 @@ license  'perl';
 
 requires 'JSON';
 requires 'JSON::MaybeXS';
+requires 'DBIx::Class::InflateColumn::Seralizer::JSON';
 requires 'Moose';
 requires 'Moose::Role';
 requires 'MooseX::NonMoose';
