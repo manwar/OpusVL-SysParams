@@ -51,6 +51,38 @@ Copyright 2011 OpusVL.
 This software is licensed according to the "IP Assignment Schedule" provided with the development project.
 
 =cut
+
+sub list {
+    my $self = shift;
+    my $group = shift;
+
+    my $rs = $self->search;
+    return $rs if not $group;
+
+    # TODO: should be able to write a WITH RECURSIVE query to get an RS here
+    # instead. That means the return value would always be the same.
+    my $groups = {};
+
+    for my $setting ($rs->all) {
+        my @path = split /\./, $setting->name;
+        my $node = $groups;
+
+        while (@path) {
+            my $name = shift @path;
+            my $path = $node->{path} || '';
+            $node->{children}->{$name} //= {};
+
+            $node = $node->{children}->{$name};
+            $node->{path} ||= join '.', grep {$_} $path, $name;
+        }
+
+        $node->{value}   = $setting->raw_value;
+        $node->{comment} = $setting->comment;
+    }
+
+    return $groups;
+}
+
 sub set
 {
 	my $self  = shift;
