@@ -92,7 +92,7 @@ sub set
 	my $info = $self->update_or_create
 	({
 		name  => $name,
-		value => JSON->new->allow_nonref->encode($value)
+		value => $value,
 	});
 
 	return $value;
@@ -108,7 +108,9 @@ sub get
 		name => $name
 	});
 
-	return $info ? JSON->new->allow_nonref->decode($info->value) : undef;
+    return undef if not $info;
+
+    return $info->value;
 }
 
 sub del 

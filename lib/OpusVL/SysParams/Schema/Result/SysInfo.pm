@@ -10,7 +10,7 @@ extends 'DBIx::Class::Core';
 
 use JSON::MaybeXS;
 
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", 'InflateColumn::Serializer');
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", 'FilterColumn');
 
 =head1 NAME
 
@@ -53,10 +53,6 @@ __PACKAGE__->add_columns(
   {
     data_type   => "text",
     is_nullable => 1,
-    serializer_class => 'JSON',
-    serializer_options => {
-        allow_nonref => 1
-    },
     original    => { data_type => "varchar" },
   },
   "comment",
@@ -67,6 +63,14 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("name");
+__PACKAGE__->filter_column('value' => {
+    filter_to_storage => sub {
+        JSON->new->allow_nonref->encode($_[1]);
+    },
+    filter_from_storage => sub {
+        JSON->new->allow_nonref->decode($_[1]);
+    }
+});
 
 before update => sub {
     my $self = shift;
