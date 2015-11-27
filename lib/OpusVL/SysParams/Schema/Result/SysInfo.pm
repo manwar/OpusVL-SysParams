@@ -40,6 +40,14 @@ __PACKAGE__->table("sys_info");
   is_nullable: 1
   original: {data_type => "varchar"}
 
+=head2 raw_value
+
+Re-encodes the value as JSON, to provide what is in the database.
+
+Also works as a setter, allowing you to set the raw JSON string. Use this to
+avoid double-encoding, but you are better off passing the value to C<value> as
+Perl data.
+
 =cut
 
 __PACKAGE__->add_columns(

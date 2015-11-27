@@ -20,6 +20,30 @@ This is used by the L<OpusVL::SysParams> object.
 
 =head1 METHODS
 
+=head2 list
+
+List all parameters. If passed a true value as its first argument, the list will
+be a nested hashref of the form
+
+    {
+        path => 'path.to.node',
+        value => 'node value',
+        comment => '...',
+        children => {
+            childnode => {
+                path => 'path.to.node.childnode',
+                ...
+            }
+        }
+    }
+
+The topmost node will have no path, comment, or value, only children. Inner
+nodes will always have a path, but may have no value or no children (nodes with
+no children should always have a value).
+
+If the true parameter is not passed, this simply returns a default ResultSet for
+all parameters in the table.
+
 =head2 get
 
 Get a system parameter.  The key name is simply a string.  It's suggested you use some 
