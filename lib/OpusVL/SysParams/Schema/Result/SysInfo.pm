@@ -79,6 +79,9 @@ before update => sub {
     if (my $raw = delete $params->{value_raw}) {
         $params->{value} = JSON->new->allow_nonref->decode($raw);
     }
+
+    # At this point I'm not sure why FilterColumn isn't doing this.
+    $params->{value} = JSON->new->allow_nonref->encode($params->{value});
 };
 
 sub raw_value {
