@@ -9,6 +9,7 @@ use namespace::autoclean;
 extends 'DBIx::Class::Core';
 
 use JSON::MaybeXS;
+use Try::Tiny;
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", 'FilterColumn');
 
@@ -76,7 +77,11 @@ __PACKAGE__->filter_column('value' => {
         JSON->new->allow_nonref->encode($_[1]);
     },
     filter_from_storage => sub {
-        JSON->new->allow_nonref->decode($_[1]);
+        my $val = $_[1];
+
+        return if not defined $val;
+
+        JSON->new->allow_nonref->decode($val);
     }
 });
 
