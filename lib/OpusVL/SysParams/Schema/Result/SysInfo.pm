@@ -58,6 +58,12 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     original    => { data_type => "varchar" },
   },
+  "label",
+  {
+    data_type   => "text",
+    is_nullable => 1,
+    original    => { data_type => "varchar" },
+  },
   "value",
   {
     data_type   => "text",
@@ -69,6 +75,11 @@ __PACKAGE__->add_columns(
     data_type   => "text",
     is_nullable => 1,
     original    => { data_type => "varchar" },
+  },
+  data_type =>
+  {
+      data_type => 'varchar',
+      is_nullable => 1,
   },
 );
 __PACKAGE__->set_primary_key("name");
