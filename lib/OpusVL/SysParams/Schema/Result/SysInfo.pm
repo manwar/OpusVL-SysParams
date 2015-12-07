@@ -6,12 +6,10 @@ use warnings;
 use Moose;
 use MooseX::NonMoose;
 use namespace::autoclean;
+use JSON;
 extends 'DBIx::Class::Core';
 
-use JSON::MaybeXS;
-use Try::Tiny;
-
-__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", 'FilterColumn');
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
 =head1 NAME
 
@@ -40,14 +38,6 @@ __PACKAGE__->table("sys_info");
   data_type: 'text'
   is_nullable: 1
   original: {data_type => "varchar"}
-
-=head2 raw_value
-
-Re-encodes the value as JSON, to provide what is in the database.
-
-Also works as a setter, allowing you to set the raw JSON string. Use this to
-avoid double-encoding, but you are better off passing the value to C<value> as
-Perl data.
 
 =cut
 
@@ -83,43 +73,13 @@ __PACKAGE__->add_columns(
   },
 );
 __PACKAGE__->set_primary_key("name");
-__PACKAGE__->filter_column('value' => {
-    filter_to_storage => sub {
-        JSON->new->allow_nonref->encode($_[1]);
-    },
-    filter_from_storage => sub {
-        my $val = $_[1];
 
-        return if not defined $val;
-
-        JSON->new->allow_nonref->decode($val);
-    }
-});
-
-before update => sub {
+sub decoded_value
+{
     my $self = shift;
-    my $params = shift;
-
-    if (my $raw = delete $params->{value_raw}) {
-        $params->{value} = JSON->new->allow_nonref->decode($raw);
-    }
-
-    # At this point I'm not sure why FilterColumn isn't doing this.
-    $params->{value} = JSON->new->allow_nonref->encode($params->{value});
-};
-
-sub raw_value {
-    my $self = shift;
-
-    # A bit awkward - we have to convert it into an object so the JSON
-    # serialiser can re-encode it.
-    if (my $value = shift) {
-        $self->value(JSON->new->allow_nonref->decode($value));
-    }
-
-    return if not defined $self->value;
-    return JSON->new->allow_nonref->encode($self->value);
+	return JSON->new->allow_nonref->decode($self->value);
 }
+
 
 __PACKAGE__->meta->make_immutable;
 
