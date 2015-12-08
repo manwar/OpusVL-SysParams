@@ -54,4 +54,8 @@ subtest 'get_or_set' => sub {
 my $json = $params->get_json('test.array');
 $params->set_json('test.array', $json);
 
+$params->set_json("json.encoding","[1,2,3]");
+is $params->get_json("json.encoding"), "[1,2,3]";
+eq_or_diff $params->get('json.encoding'), [1,2,3];
+
 done_testing;
