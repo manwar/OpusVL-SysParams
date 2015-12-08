@@ -39,6 +39,11 @@ __PACKAGE__->table("sys_info");
   is_nullable: 1
   original: {data_type => "varchar"}
 
+=head2 decoded_value
+
+Returns the value that the get method returns.  
+This may be any arbitrary data (simple) type.
+
 =cut
 
 __PACKAGE__->add_columns(

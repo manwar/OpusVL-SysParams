@@ -40,6 +40,10 @@ Delete a system parameter.
 
 Returns the keys of the system parameters.
 
+=head2 ordered
+
+Returns a resultset with an ordering applied.
+
 =head1 AUTHOR
 
 OpusVL, C<< <colin at opusvl.com> >>
@@ -51,6 +55,18 @@ Copyright 2011 OpusVL.
 This software is licensed according to the "IP Assignment Schedule" provided with the development project.
 
 =cut
+
+sub ordered
+{
+    my $self = shift;
+    my $me = $self->current_source_alias;
+    return $self->search(undef, {
+        order_by => ["$me.label", "$me.name"],
+    });
+}
+
+
+
 sub set
 {
 	my $self  = shift;
