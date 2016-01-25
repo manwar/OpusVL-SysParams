@@ -110,12 +110,15 @@ sub viable_type_conversions {
     return $self->column_info('data_type')->{extra}->{list}
         if not $self->data_type;
 
-    return +{
-        text => [ qw/text textarea/ ],
-        boolean => [ qw/boolean text textarea/ ],
-        array => [ qw/array textarea/ ],
-        textarea => [ qw/textarea array/ ],
+    my $options = +{
+        text => [ qw/textarea/ ],
+        boolean => [ qw/text textarea/ ],
+        array => [ qw/textarea/ ],
+        textarea => [ qw/array/ ],
     }->{$self->data_type} // [];
+
+    unshift @$options, $self->data_type;
+    return $options;
 }
 
 sub convert_to {
