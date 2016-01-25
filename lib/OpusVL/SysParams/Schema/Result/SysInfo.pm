@@ -100,6 +100,7 @@ __PACKAGE__->set_primary_key("name");
 sub decoded_value
 {
     my $self = shift;
+    return if not defined $self->value;
 	return JSON->new->allow_nonref->decode($self->value);
 }
 
