@@ -111,7 +111,7 @@ sub viable_type_conversions {
         if not $self->data_type;
 
     my $options = +{
-        text => [ qw/textarea/ ],
+        text => [ qw/textarea array/ ],
         boolean => [ qw/text textarea/ ],
         array => [ qw/textarea/ ],
         textarea => [ qw/array/ ],
@@ -135,11 +135,12 @@ sub convert_to {
         if $type eq $self->data_type;
 
     my $conv = {
-        "text textarea" => sub { @_ },
-        "boolean text" => sub { $_[0] ? "True" : "False" },
+        "text textarea"    => sub { @_ },
+        "text array"       => sub { [@_] },
+        "boolean text"     => sub { $_[0] ? "True" : "False" },
         "boolean textarea" => sub { $_[0] ? "True" : "False" },
-        "array textarea" => sub { join "\n", @{$_[0]} },
-        "textarea array" => sub { [ split /\n/, $_[0] ] },
+        "array textarea"   => sub { join "\n", @{$_[0]} },
+        "textarea array"   => sub { [ split /\n/, $_[0] ] },
     };
 
     my $key = join ' ', $self->data_type, $type; 
