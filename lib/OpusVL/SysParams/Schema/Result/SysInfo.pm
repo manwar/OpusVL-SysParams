@@ -87,10 +87,12 @@ __PACKAGE__->add_columns(
   },
   data_type =>
   {
+    # NOTE: don't set a default value for objects, because the current data_type
+    # restricts what other data_types we can select.
       data_type => 'enum',
       is_nullable => 1,
       extra => {
-        list => [ qw/text textarea object array boolean/ ],
+        list => [ qw/text textarea object array bool/ ],
         labels => [ "Text", "Multiline Text", "Object", "List", "Boolean" ],
       }
   },
@@ -112,7 +114,7 @@ sub viable_type_conversions {
 
     my $options = +{
         text => [ qw/textarea array/ ],
-        boolean => [ qw/text textarea/ ],
+        bool => [ qw/text textarea/ ],
         array => [ qw/textarea/ ],
         textarea => [ qw/array/ ],
     }->{$self->data_type} // [];
@@ -137,8 +139,8 @@ sub convert_to {
     my $conv = {
         "text textarea"    => sub { @_ },
         "text array"       => sub { [@_] },
-        "boolean text"     => sub { $_[0] ? "True" : "False" },
-        "boolean textarea" => sub { $_[0] ? "True" : "False" },
+        "bool text"     => sub { $_[0] ? "True" : "False" },
+        "bool textarea" => sub { $_[0] ? "True" : "False" },
         "array textarea"   => sub { join "\n", @{$_[0]} },
         "textarea array"   => sub { [ split /\n/, $_[0] ] },
     };
