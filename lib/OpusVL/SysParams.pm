@@ -27,11 +27,11 @@ OpusVL::SysParams - Module to handle system wide parameters
 
 =head1 VERSION
 
-Version 0.12
+Version 0.13
 
 =cut
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 
 =head1 SYNOPSIS
@@ -178,15 +178,7 @@ sub get_json {
     return JSON->new->allow_nonref->encode($val);
 }
 
-=head1 AUTHOR
-
-OpusVL, C<< <colin at opusvl.com> >>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2011 OpusVL.
-
-This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+=head1 SUPPORT
 
 If you require assistance, support, or further development of this software, please contact OpusVL using the details below:
 

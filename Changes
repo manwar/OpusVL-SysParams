@@ -1,5 +1,9 @@
 Revision history for OpusVL-SysParams
 
+{{ $NEXT }}
+
+        Converted to Dist::Zilla for releases.
+
 0.02    2011-04-22
         Added proper json in/out method to support ui for now.  
         Also added a delete method, again driven by the UI.
