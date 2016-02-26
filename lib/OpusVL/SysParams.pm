@@ -25,10 +25,6 @@ has 'schema' => (isa => 'DBIx::Class::Schema', is => 'ro', required => 1,
 
 OpusVL::SysParams - Module to handle system wide parameters
 
-=head1 VERSION
-
-Version 0.13
-
 =cut
 
 our $VERSION = '0.14';
