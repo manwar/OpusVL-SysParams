@@ -2,6 +2,10 @@ Revision history for OpusVL-SysParams
 
 {{ $NEXT }}
 
+0.14      2016-04-28 12:18:12+01:00 Europe/London
+
+        Removed version from POD since it doesn't get updated.
+
 0.13      2016-02-26 09:09:56+00:00 Europe/London
 
         Converted to Dist::Zilla for releases.
