@@ -54,10 +54,30 @@ returns the current type.
 For a new row, this simply returns the whole set, because we haven't specified
 the type yet.
 
+=head2 METHODS
+
 =head2 convert_to
 
-Converts the value to the provided data type (see C<viable_type_conversions>).
-If it's already that type, returns the decoded value.
+=over
+
+=item $data_type
+
+=back
+
+Converts the value to the provided data type (see C<viable_type_conversions>),
+if necessary. Returns the decoded value, i.e. a Perl data structure.
+
+=head2 set_type_from_value
+
+=over
+
+=item $value
+
+=back
+
+Attempts to guess the data type of the provided value, which defaults to the
+row's value if not provided. Sets the C<data_type> property on the field, but
+doesn't save it.
 
 =cut
 

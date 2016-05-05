@@ -22,15 +22,29 @@ This is used by the L<OpusVL::SysParams> object.
 
 =head2 get
 
-Get a system parameter.  The key name is simply a string.  It's suggested you use some 
-kind of schema like 'system.key' to prevent name clashes with other unoriginal programmers.
+Get a system parameter. The key name will only be meaningful if the same string
+has already been provided to L</set> at some point in the past, or created via
+the L<OpusVL::AppKitX::SysParams> interface.
 
 =head2 set
+
+=over
+
+=item B<$name>
+
+=item B<$value>
+
+=item B<$data_type>
+
+=back
 
 Set a system parameter.  The key name is simply a string.  It's suggested you use some 
 kind of schema like 'system.key' to prevent name clashes with other unoriginal programmers.
 
-The value can be any data structure so long as it doesn't contain code.  
+The value and data type should correspond. A guess will be made, if you don't
+provide the data type. Any value that can be JSON-encoded should work (i.e. no
+CODE refs), but see L<OpusVL::SysParams::Schema::Result::SysInfo> for the list
+of options for data type, and hence value type.
 
 =head2 del
 
