@@ -92,7 +92,7 @@ sub set
 	({
 		name  => $name,
 		value => JSON->new->allow_nonref->encode($value),
-       ($data_type ? data_type => $data_type : ())
+       ($data_type ? (data_type => $data_type) : ())
 	});
 
     if (! $info->in_storage or ! $info->data_type) {
