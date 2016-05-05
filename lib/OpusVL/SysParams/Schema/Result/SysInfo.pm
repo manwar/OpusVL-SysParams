@@ -8,6 +8,7 @@ use MooseX::NonMoose;
 use namespace::autoclean;
 use JSON;
 use Data::Munge qw/elem/;
+use Scalar::Util qw/reftype/;
 extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
@@ -148,6 +149,35 @@ sub convert_to {
     my $key = join ' ', $self->data_type, $type; 
 
     $conv->{$key}->($self->decoded_value);
+}
+
+sub set_type_from_value {
+    my $self = shift;
+    my $value = shift // $self->decoded_value;
+
+    if (ref $value) {
+        if (ref $value =~ /Bool/) {
+            # JSON::Boolean, JSON::PP::Boolean, etc
+            $self->type('boolean')
+        }
+        elsif (reftype $value eq 'HASH') {
+            $self->type('object');
+        }
+        elsif (reftype $value eq 'ARRAY') {
+            $self->type('array');
+        }
+        else {
+            warn "Cannot determine type for " . $self->name . " given " . reftype $value . ".";
+        }
+    }
+    else {
+        if ($value =~ /\n/) {
+            $self->type('textarea');
+        }
+        else {
+            $self->type('text');
+        }
+    }
 }
 
 __PACKAGE__->meta->make_immutable;

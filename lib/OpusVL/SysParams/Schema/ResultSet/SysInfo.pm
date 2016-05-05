@@ -73,11 +73,16 @@ sub set
 	my $name  = shift;
 	my $value = shift;
 
-	my $info = $self->update_or_create
+	my $info = $self->update_or_new
 	({
 		name  => $name,
 		value => JSON->new->allow_nonref->encode($value)
 	});
+
+    if (! $info->in_storage or ! $info->type) {
+        $info->set_type_from_value($value);
+        $info->update_or_insert;
+    }
 
 	return $value;
 }
