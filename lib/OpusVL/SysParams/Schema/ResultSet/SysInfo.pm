@@ -72,11 +72,13 @@ sub set
 	my $self  = shift;
 	my $name  = shift;
 	my $value = shift;
+    my $data_type = shift;
 
 	my $info = $self->update_or_new
 	({
 		name  => $name,
-		value => JSON->new->allow_nonref->encode($value)
+		value => JSON->new->allow_nonref->encode($value),
+       ($data_type ? data_type => $data_type : ())
 	});
 
     if (! $info->in_storage or ! $info->data_type) {
