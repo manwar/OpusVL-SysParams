@@ -158,13 +158,13 @@ sub set_type_from_value {
     if (ref $value) {
         if (ref $value =~ /Bool/) {
             # JSON::Boolean, JSON::PP::Boolean, etc
-            $self->type('boolean')
+            $self->data_type('boolean')
         }
         elsif (reftype $value eq 'HASH') {
-            $self->type('object');
+            $self->data_type('object');
         }
         elsif (reftype $value eq 'ARRAY') {
-            $self->type('array');
+            $self->data_type('array');
         }
         else {
             warn "Cannot determine type for " . $self->name . " given " . reftype $value . ".";
@@ -172,10 +172,10 @@ sub set_type_from_value {
     }
     else {
         if ($value =~ /\n/) {
-            $self->type('textarea');
+            $self->data_type('textarea');
         }
         else {
-            $self->type('text');
+            $self->data_type('text');
         }
     }
 }

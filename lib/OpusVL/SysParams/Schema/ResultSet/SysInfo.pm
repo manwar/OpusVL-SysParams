@@ -79,7 +79,7 @@ sub set
 		value => JSON->new->allow_nonref->encode($value)
 	});
 
-    if (! $info->in_storage or ! $info->type) {
+    if (! $info->in_storage or ! $info->data_type) {
         $info->set_type_from_value($value);
         $info->update_or_insert;
     }
