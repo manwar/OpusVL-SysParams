@@ -148,9 +148,6 @@ sub convert_to {
     my $self = shift;
     my ($type) = @_;
 
-    die "Cannot convert new row"
-        if ! $self->in_storage;
-
     die "Cannot convert to $type"
         unless elem $type, $self->viable_type_conversions;
 
