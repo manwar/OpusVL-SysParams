@@ -88,17 +88,20 @@ sub set
 	my $value = shift;
     my $data_type = shift;
 
-	my $info = $self->update_or_new
-	({
-		name  => $name,
-		value => JSON->new->allow_nonref->encode($value),
-       ($data_type ? (data_type => $data_type) : ())
-	});
+	my $info = $self->find_or_new({
+        name  => $name,
+    });
 
-    if (! $info->in_storage or ! $info->data_type) {
-        $info->set_type_from_value($value);
-        $info->update_or_insert;
+    $info->set_column(value => JSON->new->allow_nonref->encode($value));
+    if ($data_type) {
+        $info->set_column(data_type => $data_type);
     }
+
+    if (! $info->data_type) {
+        $info->set_type_from_value($value);
+    }
+
+    $info->update_or_insert;
 
 	return $value;
 }
