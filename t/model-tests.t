@@ -67,7 +67,7 @@ subtest "data types" => sub {
 
     $params->set('json.encoding', $json_result->convert_to('textarea'), 'textarea');
     $json_result->discard_changes;
-    is $json_result->data_type, 'textarea' "JSON setting was converted to textarea";
+    is $json_result->data_type, 'textarea', "JSON setting was converted to textarea";
     is $params->get('json.encoding'), "1\n2\n3", "Setting was converted correctly";
 };
 
