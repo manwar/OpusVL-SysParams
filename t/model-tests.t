@@ -58,4 +58,17 @@ $params->set_json("json.encoding","[1,2,3]");
 is $params->get_json("json.encoding"), "[1,2,3]";
 eq_or_diff $params->get('json.encoding'), [1,2,3];
 
+subtest "data types" => sub {
+    my $json_result = SysInfo->find({ name => 'json.encoding' });
+    is $json_result->data_type, 'array', "JSON result was auto-set to array type";
+
+    $params->set('text.textarea', "Short text", 'textarea');
+    is SysInfo->find({ name => 'text.textarea'})->data_type, 'textarea', "Param was told it was a textarea";
+
+    $params->set('json.encoding', $json_result->convert_to('textarea'), 'textarea');
+    $json_result->discard_changes;
+    is $json_result->data_type, 'textarea' "JSON setting was converted to textarea";
+    is $params->get('json.encoding'), "1\n2\n3", "Setting was converted correctly";
+};
+
 done_testing;
