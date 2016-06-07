@@ -148,7 +148,7 @@ sub convert_to {
     my $self = shift;
     my ($type) = @_;
 
-    die "Cannot convert to $type"
+    die "Cannot convert " . $self->name . " to $type"
         unless elem $type, $self->viable_type_conversions;
 
     return $self->decoded_value
