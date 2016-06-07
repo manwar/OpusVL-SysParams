@@ -175,7 +175,7 @@ sub set_type_from_value {
     if (ref $value) {
         if (ref $value =~ /Bool/) {
             # JSON::Boolean, JSON::PP::Boolean, etc
-            $self->data_type('boolean')
+            $self->data_type('bool')
         }
         elsif (reftype $value eq 'HASH') {
             $self->data_type('object');
