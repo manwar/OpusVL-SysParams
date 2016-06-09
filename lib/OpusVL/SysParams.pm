@@ -27,7 +27,7 @@ OpusVL::SysParams - Module to handle system wide parameters
 
 =cut
 
-our $VERSION = '0.15';
+our $VERSION = '0.16';
 
 
 =head1 SYNOPSIS
