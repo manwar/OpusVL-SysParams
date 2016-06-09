@@ -2,6 +2,11 @@ Revision history for OpusVL-SysParams
 
 {{ $NEXT }}
 
+0.15      2016-06-09 10:51:01+01:00 Europe/London
+
+        Fixed type conversion issues - still requires the DB to actually have
+            data types though
+
 0.14      2016-04-28 12:18:12+01:00 Europe/London
 
         Removed version from POD since it doesn't get updated.
