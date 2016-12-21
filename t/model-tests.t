@@ -71,4 +71,9 @@ subtest "data types" => sub {
     is $params->get('json.encoding'), "1\n2\n3", "Setting was converted correctly";
 };
 
+my $setting = SysInfo->create({ name => 'old.setting', value => '"carpet"' });
+is $params->get('old.setting'), "carpet", "Setting was retrieved correctly";
+is $setting->convert_to('text'), "carpet", "Setting was retrieved correctly";
+
+
 done_testing;

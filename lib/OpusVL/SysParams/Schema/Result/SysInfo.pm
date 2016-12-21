@@ -67,6 +67,20 @@ the type yet.
 Converts the value to the provided data type (see C<viable_type_conversions>),
 if necessary. Returns the decoded value, i.e. a Perl data structure.
 
+Expected types are,
+
+=over
+
+=item * text
+
+=item * boolean
+
+=item * array
+
+=item * textarea
+
+=back
+
 =head2 set_type_from_value
 
 =over
