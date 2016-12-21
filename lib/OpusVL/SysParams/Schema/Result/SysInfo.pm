@@ -13,11 +13,6 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
-=head1 NAME
-
-OpusVL::SysParams::Schema::Result::SysInfo
-
-=cut
 
 __PACKAGE__->table("sys_info");
 

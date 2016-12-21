@@ -21,11 +21,8 @@ has 'schema' => (isa => 'DBIx::Class::Schema', is => 'ro', required => 1,
     }
 ); 
 
-=head1 NAME
+# ABSTRACT: Module to handle system wide parameters
 
-OpusVL::SysParams - Module to handle system wide parameters
-
-=cut
 
 our $VERSION = '0.16';
 

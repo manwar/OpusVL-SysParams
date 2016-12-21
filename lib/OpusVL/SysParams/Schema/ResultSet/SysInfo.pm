@@ -4,10 +4,6 @@ use Moose;
 extends 'DBIx::Class::ResultSet';
 use JSON;
 
-=head1 NAME
-
-OpusVL::SysParams::Schema::ResultSet::SysInfo
-
 =head1 SYNOPSIS
 
 This is the ResultSet that actually stores and gets results from DBIx::Class.
@@ -57,16 +53,6 @@ Returns the keys of the system parameters.
 =head2 ordered
 
 Returns a resultset with an ordering applied.
-
-=head1 AUTHOR
-
-OpusVL, C<< <colin at opusvl.com> >>
-
-=head1 LICENSE AND COPYRIGHT
-
-Copyright 2011 OpusVL.
-
-This software is licensed according to the "IP Assignment Schedule" provided with the development project.
 
 =cut
 
