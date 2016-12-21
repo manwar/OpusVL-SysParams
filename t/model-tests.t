@@ -73,7 +73,8 @@ subtest "data types" => sub {
 
 my $setting = SysInfo->create({ name => 'old.setting', value => '"carpet"' });
 is $params->get('old.setting'), "carpet", "Setting was retrieved correctly";
-is $setting->convert_to('text'), "carpet", "Setting was retrieved correctly";
+# NOTE: seems to return in array context, probably some TT oddity.
+eq_or_diff [$setting->convert_to('textarea')], ["carpet"], "Setting was retrieved correctly";
 
 
 done_testing;

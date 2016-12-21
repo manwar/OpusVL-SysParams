@@ -73,8 +73,6 @@ Expected types are,
 
 =item * text
 
-=item * boolean
-
 =item * array
 
 =item * textarea
@@ -162,6 +160,10 @@ sub convert_to {
     my $self = shift;
     my ($type) = @_;
 
+    if(!defined $self->data_type || $self->data_type eq '')
+    {
+        $self->set_type_from_value;
+    }
     die "Cannot convert " . $self->name . " to $type"
         unless elem $type, $self->viable_type_conversions;
 
